@@ -29,22 +29,39 @@ import { isOpen } from "../store";
     <form class="flex flex-col gap-4 mb-4">
       <div class="flex flex-col">
         <label class="font-[700] text-md uppercase">Name</label>
-        <input id="name" class="border border-gray-300 rounded p-2" type="text"/>
+        <input
+          id="name"
+          class="border border-gray-300 rounded p-2"
+          type="text"
+        />
       </div>
       <div class="flex flex-col">
         <label class="font-[700] text-md uppercase">Email</label>
-        <input id="email" class="border border-gray-300 rounded p-2" type="email"/>
+        <input
+          id="email"
+          class="border border-gray-300 rounded p-2"
+          type="email"
+        />
       </div>
       <div class="flex flex-col">
         <label class="font-[700] text-md uppercase">Subject</label>
-        <input id="subject" class="border border-gray-300 rounded p-2" type="text"/>
+        <input
+          id="subject"
+          class="border border-gray-300 rounded p-2"
+          type="text"
+        />
       </div>
       <div class="flex flex-col">
         <label class="font-[700] text-md uppercase">Message</label>
-        <textarea id="text" class="border border-gray-300 rounded p-2 min-h-40" 
+        <textarea id="text" class="border border-gray-300 rounded p-2 min-h-40"
         ></textarea>
       </div>
-      <Button variant="primary" title="Send Message" classes="w-full mt-1" id="form-btn"/>
+      <Button
+        variant="primary"
+        title="Send Message"
+        classes="w-full mt-1"
+        id="form-btn"
+      />
     </form>
 
     <button id="close-dialog">
@@ -86,39 +103,36 @@ import { isOpen } from "../store";
     }
   });
 
-
   // Email logic
-  const name = document.getElementById('name') as HTMLInputElement;
-  const email = document.getElementById('email')  as HTMLInputElement;
-  const subject = document.getElementById('subject')  as HTMLInputElement;
-  const text = document.getElementById('text')  as HTMLTextAreaElement;
+  const name = document.getElementById("name") as HTMLInputElement;
+  const email = document.getElementById("email") as HTMLInputElement;
+  const subject = document.getElementById("subject") as HTMLInputElement;
+  const text = document.getElementById("text") as HTMLTextAreaElement;
 
-  const btn = document.getElementById('form-btn')
+  const btn = document.getElementById("form-btn");
 
-  btn.addEventListener("click", async() => {
-    try{
-       const res = await fetch('/api/emailSend.json', {
+  btn.addEventListener("click", async () => {
+    try {
+      const res = await fetch("/api/emailSend.json", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify ({
-          from: 'no-reply@kevinlobos.com',
-          to: 'kevinlobos42@gmail.com',
+        body: JSON.stringify({
+          from: "no-reply@kevinlobos.com",
+          to: "kevinlobos42@gmail.com",
           subject: `PORTFOLIO: ${subject.value}`,
           text: `Sender Email: ${email.value} \n
 Sender Name: ${name.value} \n
 Message: ${text.value}
-          `})
-
-      })
+          `,
+        }),
+      });
 
       const data = await res.json();
       console.log(data);
-    }catch (e){
-      console.error(e)
+    } catch (e) {
+      console.error(e);
     }
-  })
-
-
+  });
 </script>
