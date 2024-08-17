@@ -1,0 +1,9 @@
+---
+const {text} = Astro.props
+---
+
+<div class="relative group">
+    <slot></slot>
+
+    <div class="w-fit invisible opacity-20 group-hover:visible group-hover:opacity-100 absolute inset-x-0 bottom-[115%] p-1 bg-zinc-800 text-white rounded transition-opacity duration-200 text-nowrap">{text}</div>
+</div>

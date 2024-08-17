@@ -1,0 +1,124 @@
+---
+import Button from "../components/Button.astro";
+import Close from "../components/icons/Close.astro";
+
+import { isOpen } from "../store";
+---
+
+<section id="contact">
+  <div
+    class="max-w-[390px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1260px] mx-auto py-3 px-3 w-auto flex flex-col items-center justify-center xl:pb-3"
+  >
+    <p class="font-[700] uppercase text-4xl mb-12 title text-white">
+      Reach out to me!
+    </p>
+    <Button title="Contact Me!" variant="secondary" id="contact-btn" />
+  </div>
+</section>
+
+<div
+  id="contact-dialog"
+  class="h-[100vh] w-full bg-black bg-opacity-15 fixed inset-0 z-50 items-center justify-center"
+>
+  <div
+    class="bg-white rounded-md px-8 py-5 min-w-full min-h-screen md:min-w-[500px] md:min-h-fit xl:min-w-[650px] text-[#272341] relative"
+  >
+    <p class="text-center font-[700] text-2xl uppercase mb-6 mt-10">
+      Contact Me
+    </p>
+    <form class="flex flex-col gap-4 mb-4">
+      <div class="flex flex-col">
+        <label class="font-[700] text-md uppercase">Name</label>
+        <input id="name" class="border border-gray-300 rounded p-2" type="text"/>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-[700] text-md uppercase">Email</label>
+        <input id="email" class="border border-gray-300 rounded p-2" type="email"/>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-[700] text-md uppercase">Subject</label>
+        <input id="subject" class="border border-gray-300 rounded p-2" type="text"/>
+      </div>
+      <div class="flex flex-col">
+        <label class="font-[700] text-md uppercase">Message</label>
+        <textarea id="text" class="border border-gray-300 rounded p-2 min-h-40" 
+        ></textarea>
+      </div>
+      <Button variant="primary" title="Send Message" classes="w-full mt-1" id="form-btn"/>
+    </form>
+
+    <button id="close-dialog">
+      <Close
+        classes="absolute right-2 top-2 h-8 fill-gray-400 w-fit transition-all duration-200 hover:fill-gray-600"
+      />
+    </button>
+  </div>
+</div>
+
+<style>
+  #contact {
+    background-color: #02aab0;
+    background-image: linear-gradient(135deg, #02aab0 0%, #00cdac 100%);
+    color: #fff;
+    height: 100%;
+    border-top: 0px;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    margin-top: 5rem;
+  }
+  @media screen and (max-width: 500px) {
+    #contact {
+      padding-bottom: 10%;
+    }
+  }
+</style>
+<script>
+  import { isOpen } from "../store";
+
+  isOpen.subscribe((open) => {
+    if (open) {
+      document.getElementById("contact-dialog").style.display = "flex";
+      document
+        .getElementById("close-dialog")
+        .addEventListener("click", () => isOpen.set(false));
+    } else {
+      document.getElementById("contact-dialog").style.display = "none";
+    }
+  });
+
+
+  // Email logic
+  const name = document.getElementById('name') as HTMLInputElement;
+  const email = document.getElementById('email')  as HTMLInputElement;
+  const subject = document.getElementById('subject')  as HTMLInputElement;
+  const text = document.getElementById('text')  as HTMLTextAreaElement;
+
+  const btn = document.getElementById('form-btn')
+
+  btn.addEventListener("click", async() => {
+    try{
+       const res = await fetch('/api/emailSend.json', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify ({
+          from: 'no-reply@kevinlobos.com',
+          to: 'kevinlobos42@gmail.com',
+          subject: `PORTFOLIO: ${subject.value}`,
+          text: `Sender Email: ${email.value} \n
+Sender Name: ${name.value} \n
+Message: ${text.value}
+          `})
+
+      })
+
+      const data = await res.json();
+      console.log(data);
+    }catch (e){
+      console.error(e)
+    }
+  })
+
+
+</script>

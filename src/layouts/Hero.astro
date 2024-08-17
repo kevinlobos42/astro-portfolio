@@ -1,0 +1,102 @@
+---
+import { heroData } from "../data";
+const { title, name, subtitle, cta } = heroData;
+---
+
+<section
+  id="hero"
+  class="items-center text-[#272341] flex font-[400] height-[100vh] min-h-[100vh]"
+>
+  <div
+    class="min-w-[390px] sm:min-w-[540px] md:min-w-[720px] lg:min-w-[960px] xl:min-w-[1140px] 2xl:min-w-[1320px] px-12 mx-auto w-auto"
+  >
+    <main class="mb-8">
+      <h1
+        class="text-3xl xl:text-[56px] font-[650] text-center xl:text-left xl:leading-[4rem] w-full"
+      >
+        {title || "Hi, my name is"}
+        <span class="text-color-main">{name || "Your Name"}</span>
+        <br />
+        {subtitle || "I'm the Unknown Developer."}
+      </h1>
+    </main>
+    <p class="hero-cta flex text-xl mb-4 justify-center xl:justify-start">
+      <a
+        href="#skills"
+        aria-label="Find out more!"
+        class="cta-btn inline-block font-[700] leading-3 py-3 px-6 relative transition-all ease-in-out bg-transparent"
+        >{cta || "Know more"}
+      </a>
+    </p>
+  </div>
+</section>
+<style>
+  .text-color-main {
+    background: -webkit-linear-gradient(135deg, #02aab0, #00cdac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  main {
+    visibility: hidden;
+    animation-name: fadeFromLeft;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+  }
+  .hero-cta {
+    visibility: hidden;
+    animation-name: fadeFromLeft;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+  .cta-btn {
+    border-image: linear-gradient(135deg, #02aab0, #00cdac);
+    border-image-slice: 1;
+    border-style: solid;
+    border-width: 2px;
+    cursor: pointer;
+  }
+  .cta-btn {
+    transition: all 0.3s ease;
+    background: -webkit-linear-gradient(135deg, #02aab0, #00cdac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 40;
+  }
+  .cta-btn:after {
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    width: 0;
+    background-image: linear-gradient(135deg, #02aab0, #00cdac);
+    z-index: -1;
+  }
+  .cta-btn:hover:after {
+    width: 100%;
+  }
+  .cta-btn:hover {
+    color: white;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: white;
+    background: transparent;
+  }
+  @keyframes fadeFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    1% {
+      visibility: visible;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+</style>

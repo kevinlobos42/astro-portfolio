@@ -1,0 +1,43 @@
+---
+import { github, linkedin } from "../data";
+import Github from "../components/icons/Github.astro";
+import LinkedIn from "../components/icons/LinkedIn.astro";
+import Resume from "../components/icons/Resume.astro";
+import Up from "../components/icons/Up.astro";
+import Tooltip from "../components/Tooltip.astro";
+---
+
+<section class="footer">
+  <div class="flex flex-col gap-6 items-center justify-center">
+    <Tooltip text="Back to Top">
+      <a href="#hero" class="w-fit h-fit">
+        <Up classes="w-16 h-fit" />
+      </a>
+    </Tooltip>
+    <div class="flex gap-8 items-center justify-center">
+      <Tooltip text="Resume">
+        <a href="../../public/Resume.pdf" target="_blank">
+          <Resume classes="w-8 h-7 fill-white" />
+        </a>
+      </Tooltip>
+      <Tooltip text="Github">
+        <a href={github} target="_blank">
+          <Github classes="w-8 fill-white h-fit" />
+        </a>
+      </Tooltip>
+      <Tooltip text="LinkedIn">
+        <a href={linkedin} target="_blank">
+          <LinkedIn classes="w-8 fill-white h-fit" />
+        </a>
+      </Tooltip>
+    </div>
+  </div>
+</section>
+
+<style>
+  .footer {
+    background-color: #333;
+    color: white;
+    padding: 2.5rem 0;
+  }
+</style>
